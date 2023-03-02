@@ -1,0 +1,3 @@
+  nest new <name>
+  nest g module <name>
+  nest g controller <name> --no-spec 
