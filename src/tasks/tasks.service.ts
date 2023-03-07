@@ -30,4 +30,16 @@ export class TasksService {
     this.tasks.push(task);
     return task;
   }
+  deleteTask(id: string): unknown {
+    try {
+      const task = this.tasks.find((i) => i.id === id);
+      if (typeof task === 'undefined') throw new Error('Tidak ditemukan');
+      this.tasks.splice(
+        this.tasks.findIndex((a) => (a.id = id)),
+        1,
+      );
+    } catch (error) {}
+
+    return 'Data berhasil dihapus';
+  }
 }
