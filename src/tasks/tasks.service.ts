@@ -7,19 +7,19 @@ import { TaskDto } from './tasks.dto';
 export class TasksService {
   private tasks: Task[] = [];
 
-  getAllTasks(): Task[] {
+  async getAllTasks(): Promise<Task[]> {
     return this.tasks;
   }
-  getTaskById(id: string): Task {
+  async getTaskById(id: string): Promise<Task> {
     try {
-      const task = this.tasks.find((i) => i.id === id);
+      const task = await this.tasks.find((i) => i.id === id);
       if (typeof task === 'undefined') throw new Error('Tidak ditemukan');
       return task;
     } catch (error) {
       throw error;
     }
   }
-  createTask(taskDto: TaskDto): Task {
+  async createTask(taskDto: TaskDto): Promise<Task> {
     const { title, description } = taskDto;
     const task: Task = {
       id: uuid(),
@@ -30,16 +30,16 @@ export class TasksService {
     this.tasks.push(task);
     return task;
   }
-  deleteTask(id: string): unknown {
+  async deleteTask(id: string) {
     try {
-      const task = this.tasks.find((i) => i.id === id);
-      if (typeof task === 'undefined') throw new Error('Tidak ditemukan');
+      await this.getTaskById(id);
       this.tasks.splice(
         this.tasks.findIndex((a) => (a.id = id)),
         1,
       );
-    } catch (error) {}
-
-    return 'Data berhasil dihapus';
+      return 'Data berhasil dihapus';
+    } catch (error) {
+      return error;
+    }
   }
 }

@@ -26,17 +26,17 @@ export class TasksController {
     }
   }
   @Get('/:id')
-  getTaskById(@Param() Param: TaskDto): Task | any {
+  getTaskById(@Param('id') id: string): Task | any {
     try {
-      return this.tasksService.getTaskById(Param.id);
+      return this.tasksService.getTaskById(id);
     } catch (e) {
       return responseError(e.message);
     }
   }
   @Delete('/:id')
-  deleteTaskById(@Param() Param: TaskDto): Task | any {
+  deleteTaskById(@Param('id') id: string) {
     try {
-      return this.tasksService.deleteTask(Param.id);
+      return this.tasksService.deleteTask(id);
     } catch (e) {
       return responseError(e.message);
     }
